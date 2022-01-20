@@ -1,25 +1,36 @@
-import 'dart:ui';
-
-import 'package:facebook/data/data.dart';
-import 'package:facebook/palette.dart';
+import 'package:facebook/models/models.dart';
 import 'package:facebook/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 
 class CreatePost extends StatelessWidget {
-  const CreatePost({Key? key}) : super(key: key);
+  final String imageUrl;
+  final Color? color;
+  final double avatarLeftMargin;
+  final List<Widget>? bidgets;
+  final double bidgetHorizontalMargin;
+  final double bidgetVerticalMargin;
+  const CreatePost({
+    Key? key,
+    this.color,
+    this.avatarLeftMargin = 10,
+    required this.imageUrl,
+    this.bidgets,
+    this.bidgetHorizontalMargin = 30,
+    this.bidgetVerticalMargin = 10,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: color,
       child: Column(
         children: [
           Row(
             children: [
               Container(
-                margin: EdgeInsets.only(left: 10),
+                margin: EdgeInsets.only(left: avatarLeftMargin),
                 child: Avatar(
-                  imageUrl: currentUser.imageUrl,
+                  imageUrl: imageUrl,
                 ),
               ),
               const SizedBox(
@@ -35,46 +46,14 @@ class CreatePost extends StatelessWidget {
             ],
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+            margin: EdgeInsets.symmetric(
+                horizontal: bidgetHorizontalMargin,
+                vertical: bidgetVerticalMargin),
             child: Row(
-              children: [
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.videocam,
-                    color: Colors.red,
-                  ),
-                  label: const Text(
-                    'Live',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const SizedBox(width: 25),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.photo_library,
-                    color: Colors.green,
-                  ),
-                  label: const Text(
-                    'Photo',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                const SizedBox(width: 25),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon:
-                      const Icon(Icons.video_call, color: Colors.purpleAccent),
-                  label: const Text(
-                    'Room',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ],
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: bidgets!,
             ),
           ),
-          // Divider()
         ],
       ),
     );

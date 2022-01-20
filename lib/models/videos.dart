@@ -1,6 +1,6 @@
-import 'package:facebook/models/user.dart';
+import 'package:facebook/models/models.dart';
 
-class Post {
+class Video {
   User user;
   String? content;
   String? imageUrl;
@@ -9,7 +9,7 @@ class Post {
   String? shares;
   String timeAgo;
 
-  Post(this.user,
+  Video(this.user,
       {this.content,
       this.imageUrl,
       this.likes,

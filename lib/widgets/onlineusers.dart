@@ -41,8 +41,11 @@ class OnlineUsers extends StatelessWidget {
             }
             final User user = onlineUsers[index - 1];
             return Container(
-                margin: const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-                child: Avatar(imageUrl: user.imageUrl));
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+                child: Avatar(
+                  imageUrl: user.imageUrl,
+                  hasOnline: user.isOnline ? true : false,
+                ));
           }),
     );
   }

@@ -1,7 +1,9 @@
 import 'package:facebook/data/data.dart';
+import 'package:facebook/pages/pages.dart';
 import 'package:facebook/palette.dart';
 import 'package:facebook/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,15 +18,65 @@ class HomePage extends StatelessWidget {
           slivers: [
             CustomAppBar(
               unreadMessages: currentUser.unReadMessages,
+              letterSpacing: -1.6,
+              appName: 'Facebook',
+              color: Palette.facebookblue,
+              widgets: [
+                ActionItems(
+                  icon: Icons.search,
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => const SearchPage(),
+                      ),
+                    ),
+                  },
+                ),
+                ActionItems(
+                  icon: MdiIcons.facebookMessenger,
+                  message: true,
+                  unreadMessages: currentUser.unReadMessages,
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => const Messenger(),
+                      ),
+                    ),
+                  },
+                ),
+              ],
             ),
-            const SliverToBoxAdapter(
-              child: CreatePost(),
+            SliverToBoxAdapter(
+              child: CreatePost(
+                // key: const PageStorageKey('createpost'),
+                imageUrl: currentUser.imageUrl,
+                color: Colors.white,
+                bidgets: bidgets,
+              ),
             ),
             SliverToBoxAdapter(
               child: OnlineUsers(
+                key: const PageStorageKey('onlineusers'),
                 onlineUsers: onlineUsers,
               ),
-            )
+            ),
+            SliverToBoxAdapter(
+              child: Stories(
+                key: const PageStorageKey('stories'),
+                stories: stories,
+                user: currentUser,
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return PostContainer(
+                  post: posts,
+                  index: index,
+                );
+              }, childCount: posts.length),
+            ),
           ],
         ),
       ),
